@@ -1,0 +1,19 @@
+{
+  "name": "mercurydocs",
+  "version": "0.0.1",
+  "description": "Mercury Wallet Documentation",
+  "main": "index.js",
+  "authors": {
+    "name": "Mercury Wallet",
+    "email": "social@mercurywallet.com"
+  },
+  "repository": "github.com:commerceblock/mercurydocs/mercurydocs",
+  "scripts": {
+    "dev": "vuepress dev src",
+    "build": "vuepress build src"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "vuepress": "^1.5.3"
+  }
+}

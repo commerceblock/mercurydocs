@@ -1,5 +1,5 @@
 # mercurydocs
 
-## Important information
+## Documentation located at 
 
-Goes here
+https://docs.mercurywallet.com
