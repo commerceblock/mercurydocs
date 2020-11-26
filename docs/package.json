@@ -7,7 +7,7 @@
     "name": "Mercury Wallet",
     "email": "social@mercurywallet.com"
   },
-  "repository": "github.com:commerceblock/mercurydocs/mercurydocs",
+  "repository": "github.com/commerceblock/mercurydocs",
   "scripts": {
     "dev": "vuepress dev src",
     "build": "vuepress build src"
