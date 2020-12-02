@@ -33,26 +33,23 @@ module.exports = {
     lastUpdated: false,
     nav: [
       {
-        text: 'Guide',
-        link: '/guide/',
+        text: 'Docs',
+        link: '/docs/',
       },
       {
-        text: 'Config',
-        link: '/config/'
-      },
-      {
-        text: 'VuePress',
-        link: 'https://v1.vuepress.vuejs.org'
+        text: 'Mercury Wallet',
+        link: 'https://mercurywallet.com'
       }
     ],
     sidebar: {
-      '/guide/': [
+      '/docs/': [
         {
-          title: 'Guide',
+          title: 'Docs',
           collapsable: false,
           children: [
             '',
-            'using-vue',
+            'server-build-run',
+            'wallet-build-run',
           ]
         }
       ],
