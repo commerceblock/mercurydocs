@@ -48,8 +48,12 @@ module.exports = {
           collapsable: false,
           children: [
             '',
-            'server-build-run',
-            'wallet-build-run',
+            '01protocol',
+            '02architecture',
+            '03api',
+            '04lockbox',
+            '05server-build-run',
+            '06wallet-build-run',
           ]
         }
       ],
