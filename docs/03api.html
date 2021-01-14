@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Mercury API specification | Mercury Wallet Documentation</title>
+    <meta name="generator" content="VuePress 1.7.1">
+    
+    <meta name="description" content="Mercury Wallet Documentation">
+    <meta name="theme-color" content="#3eaf7c">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    
+    <link rel="preload" href="/assets/css/0.styles.f1075b4d.css" as="style"><link rel="preload" href="/assets/js/app.9034bcfa.js" as="script"><link rel="preload" href="/assets/js/2.ae018d90.js" as="script"><link rel="preload" href="/assets/js/14.67b7c810.js" as="script"><link rel="prefetch" href="/assets/js/10.18f11048.js"><link rel="prefetch" href="/assets/js/11.8d217ddb.js"><link rel="prefetch" href="/assets/js/12.e505a52d.js"><link rel="prefetch" href="/assets/js/13.ed52703c.js"><link rel="prefetch" href="/assets/js/15.d90a579b.js"><link rel="prefetch" href="/assets/js/16.fc0a8036.js"><link rel="prefetch" href="/assets/js/17.58d9a5e5.js"><link rel="prefetch" href="/assets/js/3.88d448f0.js"><link rel="prefetch" href="/assets/js/4.0ca85bb7.js"><link rel="prefetch" href="/assets/js/5.ca429f71.js"><link rel="prefetch" href="/assets/js/6.aca726e5.js"><link rel="prefetch" href="/assets/js/7.60a784a4.js"><link rel="prefetch" href="/assets/js/8.eb9951b3.js"><link rel="prefetch" href="/assets/js/9.93d92fd2.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.f1075b4d.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">Mercury Wallet Documentation</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/docs/" class="nav-link router-link-active">
+  Docs
+</a></div><div class="nav-item"><a href="https://mercurywallet.com" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Mercury Wallet
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/docs/" class="nav-link router-link-active">
+  Docs
+</a></div><div class="nav-item"><a href="https://mercurywallet.com" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Mercury Wallet
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>Docs</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/docs/" aria-current="page" class="sidebar-link">Introduction</a></li><li><a href="/docs/01protocol.html" class="sidebar-link">Mercury Protocol</a></li><li><a href="/docs/02architecture.html" class="sidebar-link">Mercury Architecture</a></li><li><a href="/docs/03api.html" aria-current="page" class="active sidebar-link">Mercury API specification</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/docs/03api.html#utility-endpoints" class="sidebar-link">Utility Endpoints</a></li><li class="sidebar-sub-header"><a href="/docs/03api.html#_2p-ecdsa-endpoints" class="sidebar-link">2P ECDSA Endpoints</a></li><li class="sidebar-sub-header"><a href="/docs/03api.html#deposit-endpoints" class="sidebar-link">Deposit Endpoints</a></li><li class="sidebar-sub-header"><a href="/docs/03api.html#transfer-endpoints" class="sidebar-link">Transfer Endpoints</a></li></ul></li><li><a href="/docs/04lockbox.html" class="sidebar-link">Lockbox specification and API</a></li><li><a href="/docs/05server-build-run.html" class="sidebar-link">Build and run Mercury Server</a></li><li><a href="/docs/06wallet-build-run.html" class="sidebar-link">Build and run Mercury Wallet</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="mercury-api-specification"><a href="#mercury-api-specification" class="header-anchor">#</a> Mercury API specification</h1> <p>The Mercury protocol and wallet operates as a client/server application. The Mercury server is operated by the <em>statechain entity</em> as a RESTful web service exposing HTTP APIs to enable client wallets to deposit, transfer, withdraw and swap statecoins.</p> <h3 id="rest-framework-structure"><a href="#rest-framework-structure" class="header-anchor">#</a> REST framework structure</h3> <div class="language- extra-class"><pre class="language-text"><code>response = json response object
+
+response['error'] : json response error field
+</code></pre></div><h2 id="utility-endpoints"><a href="#utility-endpoints" class="header-anchor">#</a> Utility Endpoints</h2> <h4 id="ping"><a href="#ping" class="header-anchor">#</a> Ping</h4> <p>Server status</p> <p><strong>request:</strong> https://fakeapi.mercurywallet.io/ping</p> <p><em>response</em></p> <div class="language- extra-class"><pre class="language-text"><code>Status::Ok
+</code></pre></div><h4 id="server-fee-info"><a href="#server-fee-info" class="header-anchor">#</a> Server fee info</h4> <p>Provide information on the server fee and locktime requirements</p> <p><strong>request:</strong> https://fakeapi.mercurywallet.io/info/fee</p> <p><em>response</em></p> <div class="language- extra-class"><pre class="language-text"><code>StateEntityFeeInfoAPI {
+    address: String, // Receive address for fee payments
+    deposit: u64,    // basis points
+    withdraw: u64,   // basis points
+    interval: u32,   // locktime decrement interval in blocks
+    initlock: u32,   // inital backup locktime
+}
+</code></pre></div><h4 id="get-statechain"><a href="#get-statechain" class="header-anchor">#</a> Get statechain</h4> <p>Get the full statechain for a specified statechain ID</p> <p><strong>request:</strong> https://fakeapi.mercurywallet.io/statechain/&lt;statechain_id&gt;</p> <p><em>response</em></p> <div class="language- extra-class"><pre class="language-text"><code>StateChainDataAPI {
+    utxo: OutPoint,
+    amount: u64,
+    chain: Vec&lt;State&gt;,
+    locktime: u32,  // the curent owner nlocktime
+}
+</code></pre></div><h4 id="get-merkle-root"><a href="#get-merkle-root" class="header-anchor">#</a> Get Merkle root</h4> <p>Get the current root commitment of the statechain Sparse Merkle Tree</p> <p><strong>request:</strong> https://fakeapi.mercurywallet.io/info/root</p> <p><em>response</em></p> <div class="language- extra-class"><pre class="language-text"><code>Root {
+    id: i64,
+    value: Hash,
+    commitment_info: CommitmentInfo,
+}
+</code></pre></div><h4 id="get-merke-proof"><a href="#get-merke-proof" class="header-anchor">#</a> Get Merke Proof</h4> <p>Get the Merkle path proof for the specified statecoin and Sparse Merkle tree root.</p> <p><strong>request:</strong> https://fakeapi.mercurywallet.io/info/proof</p> <p><em>data</em></p> <div class="language- extra-class"><pre class="language-text"><code>SmtProofMsgAPI {
+    root: Root,
+    funding_txid: String,
+}
+</code></pre></div><p><em>response</em></p> <div class="language- extra-class"><pre class="language-text"><code>Root {
+    id: i64,
+    value: Hash,
+    commitment_info: CommitmentInfo,
+}
+</code></pre></div><h4 id="prepare-sign-transaction"><a href="#prepare-sign-transaction" class="header-anchor">#</a> Prepare sign transaction</h4> <p>Notify the server of a backup or withdrawal transaction to co-signed (via 2P-ECDSA).</p> <p><strong>request:</strong> https://fakeapi.mercurywallet.io/prepare-sign</p> <p><em>data</em></p> <div class="language- extra-class"><pre class="language-text"><code>PrepareSignTxMsg {
+    shared_key_id: Uuid,
+    protocol: Protocol, // Depsit or Transfer
+    tx_hex: String,
+    input_addrs: Vec&lt;PK&gt;, // pub keys being spent from
+    input_amounts: Vec&lt;u64&gt;,
+    proof_key: String,
+}
+</code></pre></div><p><em>response</em></p> <div class="language- extra-class"><pre class="language-text"><code>Ok
+</code></pre></div><h4 id="get-recovery-data"><a href="#get-recovery-data" class="header-anchor">#</a> Get recovery data</h4> <p>Request statechain data, IDs and backup transaction for a specified proof key for wallet recovery operations.</p> <p><strong>request:</strong> https://fakeapi.mercurywallet.io/request-recovery</p> <p><em>data</em></p> <div class="language- extra-class"><pre class="language-text"><code>RequestRecoveryData {
+    key: String,
+    sig: String,
+}
+</code></pre></div><p><em>response</em></p> <div class="language- extra-class"><pre class="language-text"><code>RecoveryDataMsg {
+    shared_key_id: Uuid,
+    utxo: OutPoint,
+    amount: u64,
+    chain: Vec&lt;State&gt;,
+    locktime: u32,
+    tx_hex: String,
+}
+</code></pre></div><h2 id="_2p-ecdsa-endpoints"><a href="#_2p-ecdsa-endpoints" class="header-anchor">#</a> 2P ECDSA Endpoints</h2> <p>There are four API calls that are used to handle both shared key generation and then two-party signature generation for the two-party ECDSA protocol. The two key generation API calls are called during the deposit process and on each <code>transfer_reciver</code>. The two signing API calls are called each time a backup transaction needs to be signed, and on withdrawal.</p> <h4 id="shared-key-generation-stage-1"><a href="#shared-key-generation-stage-1" class="header-anchor">#</a> Shared key generation: stage 1</h4> <p>Request server commitments for key generation and ZK proofs.</p> <p><strong>request:</strong> https://fakeapi.mercurywallet.io/ecdsa/keygen/first</p> <p><em>data</em></p> <div class="language- extra-class"><pre class="language-text"><code>KeyGenMsg1 {
+    shared_key_id: Uuid,
+    protocol: Protocol, // Deposit or Transfer
+}
+</code></pre></div><p><em>response</em></p> <div class="language- extra-class"><pre class="language-text"><code>KeyGenFirstMsg {
+    pk_commitment: BigInt,
+    zk_pok_commitment: BigInt,
+}
+</code></pre></div><h4 id="shared-key-generation-stage-2"><a href="#shared-key-generation-stage-2" class="header-anchor">#</a> Shared key generation: stage 2</h4> <p>Request server Diffie-Hellman shares, Paillier key encryption and ZK proofs.</p> <p><strong>request:</strong> https://fakeapi.mercurywallet.io/ecdsa/keygen/second</p> <p><em>data</em></p> <div class="language- extra-class"><pre class="language-text"><code>KeyGenMsg2 {
+    shared_key_id: Uuid,
+    dlog_proof: DLogProof,
+}
+</code></pre></div><p><em>response</em></p> <div class="language- extra-class"><pre class="language-text"><code>KeyGenParty1Message2 {
+    ecdh_second_message: party_one::KeyGenSecondMsg,
+    ek: EncryptionKey,
+    c_key: BigInt,
+    correct_key_proof: NICorrectKeyProof,
+    pdl_statement: PDLwSlackStatement,
+    pdl_proof: PDLwSlackProof,
+    composite_dlog_proof: CompositeDLogProof,
+}
+</code></pre></div><h4 id="_2p-signing-stage-1"><a href="#_2p-signing-stage-1" class="header-anchor">#</a> 2P Signing: stage 1</h4> <p>Request server generation of shared ephemeral signing key and proof.</p> <p><strong>request:</strong> https://fakeapi.mercurywallet.io/ecdsa/sign/first</p> <p><em>data</em></p> <div class="language- extra-class"><pre class="language-text"><code>SignMsg1 {
+    shared_key_id: Uuid,
+    eph_key_gen_first_message_party_two: party_two::EphKeyGenFirstMsg,
+}
+</code></pre></div><p><em>response</em></p> <div class="language- extra-class"><pre class="language-text"><code>EphKeyGenFirstMsg {
+    d_log_proof: ECDDHProof,
+    public_share: GE,
+    c: GE, //c = secret_share * base_point2
+}
+</code></pre></div><h4 id="_2p-signing-stage-2"><a href="#_2p-signing-stage-2" class="header-anchor">#</a> 2P Signing: stage 2</h4> <p>Request server generation of shared ephemeral signing key and proof.</p> <p><strong>request:</strong> https://fakeapi.mercurywallet.io/ecdsa/sign/second</p> <p><em>data</em></p> <div class="language- extra-class"><pre class="language-text"><code>SignMsg2 {
+    shared_key_id: Uuid,
+    sign_second_msg_request: SignSecondMsgRequest {
+    	protocol: Protocol,  // Deposit or Transfer
+    	message: BigInt,   // sighash
+    	party_two_sign_message: party2::SignMessage,
+	},
+}
+</code></pre></div><p><em>response</em></p> <div class="language- extra-class"><pre class="language-text"><code>Vec&lt;Vec&lt;u8&gt;&gt; // signature
+</code></pre></div><h2 id="deposit-endpoints"><a href="#deposit-endpoints" class="header-anchor">#</a> Deposit Endpoints</h2> <p>There are two specific deposit endpoints to initiate and finalise the statecoin deposit protocol</p> <h4 id="deposit-initiate"><a href="#deposit-initiate" class="header-anchor">#</a> Deposit initiate</h4> <p>Initiate deposit with the client proof key to generate a user ID.</p> <p><strong>request:</strong> https://fakeapi.mercurywallet.io/deposit/init</p> <p><em>data</em></p> <div class="language- extra-class"><pre class="language-text"><code>DepositMsg1 {
+    auth: String,
+    proof_key: String,
+}
+</code></pre></div><p><em>response</em></p> <div class="language- extra-class"><pre class="language-text"><code>Uuid
+</code></pre></div><h4 id="deposit-confirm"><a href="#deposit-confirm" class="header-anchor">#</a> Deposit confirm</h4> <p>Confirm deposit is completed.</p> <p><strong>request:</strong> https://fakeapi.mercurywallet.io/deposit/confirm</p> <p><em>data</em></p> <div class="language- extra-class"><pre class="language-text"><code>DepositMsg2 {
+    shared_key_id: Uuid,
+}
+</code></pre></div><p><em>response</em></p> <div class="language- extra-class"><pre class="language-text"><code>Uuid
+</code></pre></div><h2 id="transfer-endpoints"><a href="#transfer-endpoints" class="header-anchor">#</a> Transfer Endpoints</h2> <p>There are three specific transfer endpoints to initiate (sender), recieve and finalise the statecoin transfer protocol.</p> <h4 id="transfer-sender"><a href="#transfer-sender" class="header-anchor">#</a> Transfer sender</h4> <p>Sender calls with statechain signature to get the blinding factor and proof key.</p> <p><strong>request:</strong> https://fakeapi.mercurywallet.io/transfer/sender</p> <p><em>data</em></p> <div class="language- extra-class"><pre class="language-text"><code>TransferMsg1 {
+    shared_key_id: Uuid,
+    statechain_sig: StateChainSig,
+}
+</code></pre></div><p><em>response</em></p> <div class="language- extra-class"><pre class="language-text"><code>TransferMsg2 {
+    x1: FESer,
+    proof_key: ecies::PublicKey,
+}
+</code></pre></div><h4 id="transfer-receiver"><a href="#transfer-receiver" class="header-anchor">#</a> Transfer receiver</h4> <p>Receiver calls with signed statechain, key share update and backup transaction.</p> <p><strong>request:</strong> https://fakeapi.mercurywallet.io/transfer/receiver</p> <p><em>data</em></p> <div class="language- extra-class"><pre class="language-text"><code>TransferMsg4 {
+    shared_key_id: Uuid,
+    statechain_id: Uuid,
+    t2: FE, // t2 = t1*o2_inv = o1*x1*o2_inv
+    statechain_sig: StateChainSig,
+    o2_pub: GE,
+    tx_backup_hex: String,
+    batch_data: Option&lt;BatchData&gt;,
+}
+</code></pre></div><p><em>response</em></p> <div class="language- extra-class"><pre class="language-text"><code>TransferMsg5 {
+    new_shared_key_id: Uuid,
+    s2_pub: GE,
+    theta: FE,
+}
+</code></pre></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/docs/02architecture.html" class="prev">
+        Mercury Architecture
+      </a></span> <span class="next"><a href="/docs/04lockbox.html">
+        Lockbox specification and API
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.9034bcfa.js" defer></script><script src="/assets/js/2.ae018d90.js" defer></script><script src="/assets/js/14.67b7c810.js" defer></script>
+  </body>
+</html>
