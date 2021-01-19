@@ -11,7 +11,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     
-    <link rel="preload" href="/assets/css/0.styles.f1075b4d.css" as="style"><link rel="preload" href="/assets/js/app.9034bcfa.js" as="script"><link rel="preload" href="/assets/js/2.ae018d90.js" as="script"><link rel="preload" href="/assets/js/9.93d92fd2.js" as="script"><link rel="prefetch" href="/assets/js/10.18f11048.js"><link rel="prefetch" href="/assets/js/11.8d217ddb.js"><link rel="prefetch" href="/assets/js/12.e505a52d.js"><link rel="prefetch" href="/assets/js/13.ed52703c.js"><link rel="prefetch" href="/assets/js/14.67b7c810.js"><link rel="prefetch" href="/assets/js/15.d90a579b.js"><link rel="prefetch" href="/assets/js/16.fc0a8036.js"><link rel="prefetch" href="/assets/js/17.58d9a5e5.js"><link rel="prefetch" href="/assets/js/3.88d448f0.js"><link rel="prefetch" href="/assets/js/4.0ca85bb7.js"><link rel="prefetch" href="/assets/js/5.ca429f71.js"><link rel="prefetch" href="/assets/js/6.aca726e5.js"><link rel="prefetch" href="/assets/js/7.60a784a4.js"><link rel="prefetch" href="/assets/js/8.eb9951b3.js">
+    <link rel="preload" href="/assets/css/0.styles.f1075b4d.css" as="style"><link rel="preload" href="/assets/js/app.0c21ee8f.js" as="script"><link rel="preload" href="/assets/js/2.ae018d90.js" as="script"><link rel="preload" href="/assets/js/9.ff60804c.js" as="script"><link rel="prefetch" href="/assets/js/10.18f11048.js"><link rel="prefetch" href="/assets/js/11.8d217ddb.js"><link rel="prefetch" href="/assets/js/12.e505a52d.js"><link rel="prefetch" href="/assets/js/13.ed52703c.js"><link rel="prefetch" href="/assets/js/14.67b7c810.js"><link rel="prefetch" href="/assets/js/15.d90a579b.js"><link rel="prefetch" href="/assets/js/16.fc0a8036.js"><link rel="prefetch" href="/assets/js/17.58d9a5e5.js"><link rel="prefetch" href="/assets/js/3.88d448f0.js"><link rel="prefetch" href="/assets/js/4.0ca85bb7.js"><link rel="prefetch" href="/assets/js/5.ca429f71.js"><link rel="prefetch" href="/assets/js/6.aca726e5.js"><link rel="prefetch" href="/assets/js/7.60a784a4.js"><link rel="prefetch" href="/assets/js/8.eb9951b3.js">
     <link rel="stylesheet" href="/assets/css/0.styles.f1075b4d.css">
   </head>
   <body>
@@ -25,8 +25,7 @@
   Mercury Wallet
   <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>Docs</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/docs/" aria-current="page" class="sidebar-link">Introduction</a></li><li><a href="/docs/01protocol.html" class="sidebar-link">Mercury Protocol</a></li><li><a href="/docs/02architecture.html" class="sidebar-link">Mercury Architecture</a></li><li><a href="/docs/03api.html" class="sidebar-link">Mercury API specification</a></li><li><a href="/docs/04lockbox.html" aria-current="page" class="active sidebar-link">Lockbox specification and API</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/docs/04lockbox.html#lockbox-api-specification" class="sidebar-link">Lockbox API specification</a></li></ul></li><li><a href="/docs/05server-build-run.html" class="sidebar-link">Build and run Mercury Server</a></li><li><a href="/docs/06wallet-build-run.html" class="sidebar-link">Build and run Mercury Wallet</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="lockbox-specification-and-api"><a href="#lockbox-specification-and-api" class="header-anchor">#</a> Lockbox specification and API</h1> <p>The management of Mercury server secret key shares is secured using Intel SGX secure enclaves (trusted execution environments).</p> <p>The motivation for this design is to ensure two crucial properties:</p> <ol><li>That the server key share is secured, even from an attacker that has root access to the server or physical access to the hardware.</li> <li>The server key shares are securely deleted (or become unrecoverable) when they expire (i.e. the ownership of a state coin moves to a new user.</li></ol> <p>Intel SGX enclaves can achieve both of these properties by generating, updating and using the statecoin server key shares exclusively within secure enclaves. In this case, the server key shares can never leave an enclave and only be updated and used in two-party signing operations when authenticated with a statecoin owner public key - even the system admin and developers with root access would be unable to either extract a key or perform an unauthenticated two-party signing operation.</p> <h3 id="sgx-application-architecture-considerations"><a href="#sgx-application-architecture-considerations" class="header-anchor">#</a> SGX Application Architecture considerations</h3> <p>The use of a secure SGX enclave limits execution of enclave code to a single, specific Intel CPU. An enclave cannot be replicated on several machines, and is confined to the CPU it was created on (however, enclaves can share secrets with other enclaves on different machines if that is what it is programmed to do).</p> <p>Therefore, the enclave-specific operations should be separated (onto a specific Intel CPU machine) from the main server operations, which are continuously serving the public API and can be dynamically replicated depending on demand/load.</p> <p>All of the server key share operations will then take place in the separate bare-metal machine, which communicates with the main server.</p> <p>The server private key share operations will be performed by a separate daemon which will run two separate threads using SGX instructions and functions: an untrusted thread that has full system access and can send and receive messages with the main server, and a trusted thread (the enclave) which is inaccessible to the rest of the system and can only be interacted with via function calls from the untrusted thread (<code>Ecalls</code>).</p> <p>The state of the trusted thread (enclave) can be stored persistently on disk via the SGX sealing process (i.e. secrets are encrypted with enclave keys) to handle both large numbers of key shares and system shut downs.</p> <p><br><br></p><p align="center"><img src="/assets/img/fig8.647aa5a1.png" align="middle" width="400" vspace="20"></p><p></p> <p align="center">
   Schematic of the Lockbox set-up and connections. 
-</p> <br><br> <p>Summary of changes to server secrets:</p> <div class="language- extra-class"><pre class="language-text"><code>	x1 generated in enclave
-	s2 generated in enclave (removed from Table::UserSession)
+</p> <br><br> <p>Summary of changes to server secrets:</p> <div class="language- extra-class"><pre class="language-text"><code>	s2 generated in enclave
 	paillierkeypair generated in enclave (removed from Table::Ecdsa)
 	paillierkeypair generated in enclave (removed from Table::Ecdsa)
 	party1private generated in enclave (removed from Table::Ecdsa)
@@ -35,9 +34,95 @@
 	second_message
     sign_first
     sign_second
-	transfer_receiver [with attestation of key share deletion]
+	transfer_receiver
 	transfer_finalize [[with attestation of key share deletion]]
-</code></pre></div><h3 id="lockbox-server-communication"><a href="#lockbox-server-communication" class="header-anchor">#</a> Lockbox-server communication</h3> <p>Required high performance and a request-reply and push-pull pattern supporting multi-threading and message queuing.</p> <p>The main server will request the Lockbox server to perform specified operations as they are required according to, in turn, by operations requested by user wallets via the public API.</p> <h3 id="attestation"><a href="#attestation" class="header-anchor">#</a> Attestation</h3> <p>Attestation is the process of proving that a specified program has been run on a specific machine. For Intel SGX, this is a mechanism that can be used to prove to third parties that specific cryptographic operations have been performed in a specified way within an enclave. For the Mercury protocol, this process can be used to prove to a user/public that two party key shares have been generated within the enclave in a specified way, and old shares deleted when updated in a way that they cannot be recovered. This attestation can be verified by users.</p> <h2 id="lockbox-api-specification"><a href="#lockbox-api-specification" class="header-anchor">#</a> Lockbox API specification</h2></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+</code></pre></div><h3 id="lockbox-server-communication"><a href="#lockbox-server-communication" class="header-anchor">#</a> Lockbox-server communication</h3> <p>Required high performance and a request-reply and push-pull pattern supporting multi-threading and message queuing.</p> <p>The main server will request the Lockbox server to perform specified operations as they are required according to, in turn, by operations requested by user wallets via the public API.</p> <h3 id="attestation"><a href="#attestation" class="header-anchor">#</a> Attestation</h3> <p>Attestation is the process of proving that a specified program has been run on a specific machine. For Intel SGX, this is a mechanism that can be used to prove to third parties that specific cryptographic operations have been performed in a specified way within an enclave. For the Mercury protocol, this process can be used to prove to a user/public that two party key shares have been generated within the enclave in a specified way, and old shares deleted when updated in a way that they cannot be recovered. This attestation can be verified by users.</p> <h2 id="lockbox-api-specification"><a href="#lockbox-api-specification" class="header-anchor">#</a> Lockbox API specification</h2> <p>The main Mercury server application makes HTTP POST requests to the Lockbox application to perform <em>statechain entity</em> private key share operations, including key generation, ZK proof generation, message signing and key share update and deletion. A description of the Server-Lockbox API is described below:</p> <h3 id="rest-framework-structure"><a href="#rest-framework-structure" class="header-anchor">#</a> REST framework structure</h3> <div class="language- extra-class"><pre class="language-text"><code>response = json response object
+
+response['error'] : json response error field
+</code></pre></div><h3 id="key-generation"><a href="#key-generation" class="header-anchor">#</a> Key generation</h3> <h4 id="first-message"><a href="#first-message" class="header-anchor">#</a> First message</h4> <p>Keygen first message</p> <p><strong>request:</strong> https://0.0.0.0/ecdsa/keygen/first</p> <p><em>data</em></p> <div class="language- extra-class"><pre class="language-text"><code>KeyGenMsg1 {
+    shared_key_id: Uuid,
+    protocol: Protocol,
+}
+</code></pre></div><p><em>response</em></p> <div class="language- extra-class"><pre class="language-text"><code>KeyGenFirstMsg {
+    pk_commitment: BigInt,
+    zk_pok_commitment: BigInt,
+}
+</code></pre></div><h4 id="second-message"><a href="#second-message" class="header-anchor">#</a> Second message</h4> <p>Keygen second message</p> <p><strong>request:</strong> https://0.0.0.0/ecdsa/keygen/second</p> <p><em>data</em></p> <div class="language- extra-class"><pre class="language-text"><code>KeyGenMsg2 {
+    shared_key_id: Uuid,
+    dlog_proof: DLogProof,
+}
+</code></pre></div><p><em>response</em></p> <div class="language- extra-class"><pre class="language-text"><code>KeyGenParty1Message2 {
+    ecdh_second_message: party_one::KeyGenSecondMsg,
+    ek: EncryptionKey,
+    c_key: BigInt,
+    correct_key_proof: NICorrectKeyProof,
+    pdl_statement: PDLwSlackStatement,
+    pdl_proof: PDLwSlackProof,
+    composite_dlog_proof: CompositeDLogProof,
+}
+</code></pre></div><h3 id="signing"><a href="#signing" class="header-anchor">#</a> Signing</h3> <h4 id="sign-first"><a href="#sign-first" class="header-anchor">#</a> Sign first</h4> <p>First signing message to generate shared ephemeral signing key and proof.</p> <p><strong>request:</strong> https://0.0.0.0/ecdsa/sign/first</p> <p><em>data</em></p> <div class="language- extra-class"><pre class="language-text"><code>SignMsg1 {
+    shared_key_id: Uuid,
+    eph_key_gen_first_message_party_two: party_two::EphKeyGenFirstMsg,
+}
+</code></pre></div><p><em>response</em></p> <div class="language- extra-class"><pre class="language-text"><code>EphKeyGenFirstMsg {
+    d_log_proof: ECDDHProof,
+    public_share: GE,
+    c: GE,
+}
+</code></pre></div><h4 id="sign-second"><a href="#sign-second" class="header-anchor">#</a> Sign second</h4> <p>Second signing message to generate signature</p> <p><strong>request:</strong> https://0.0.0.0/ecdsa/sign/second</p> <p><em>data</em></p> <div class="language- extra-class"><pre class="language-text"><code>SignMsg2 {
+    shared_key_id: Uuid,
+    sign_second_msg_request: SignSecondMsgRequest,
+}
+</code></pre></div><p><em>response</em></p> <div class="language- extra-class"><pre class="language-text"><code>Vec&lt;Vec&lt;u8&gt;&gt;
+</code></pre></div><h3 id="transfer-structs"><a href="#transfer-structs" class="header-anchor">#</a> Transfer structs</h3> <h4 id="keyupdate-first"><a href="#keyupdate-first" class="header-anchor">#</a> Keyupdate first</h4> <p><strong>request:</strong> https://0.0.0.0/ecdsa/keyupdate/first</p> <p><em>data</em></p> <div class="language- extra-class"><pre class="language-text"><code>KUSendMsg {
+    user_id: Uuid,
+    statechain_id: Uuid,
+    x1: FE,
+    t1: FE,
+    o2_pub: GE,
+}
+</code></pre></div><p><em>response</em></p> <div class="language- extra-class"><pre class="language-text"><code>pub struct KUReceiveMsg {
+    theta: FE,
+    s2_pub: GE,
+}
+</code></pre></div><h4 id="keyupdate-second"><a href="#keyupdate-second" class="header-anchor">#</a> Keyupdate second</h4> <p><strong>request:</strong> https://0.0.0.0/ecdsa/keyupdate/second</p> <p><em>data</em></p> <div class="language- extra-class"><pre class="language-text"><code>KUFinalize { 
+    statechain_id: Uuid,
+    shared_key_id: Uuid,
+}
+</code></pre></div><p><em>response</em></p> <div class="language- extra-class"><pre class="language-text"><code>KUAttest {
+    statechain_id: Uuid,
+    attestation: String,
+}
+</code></pre></div><h3 id="function-descriptions"><a href="#function-descriptions" class="header-anchor">#</a> Function descriptions</h3> <p><code>fn keyupdate_first(&amp;self, reciever_msg: KUSendMsg) -&gt; Result&lt;KUReceiveMsg&gt;</code></p> <p>The lockbox receives <code>user_id</code>, <code>statechain_id</code>, the (server generated) transfer nonce <code>x1</code>, transfer product <code>t2</code> and new owner public key share <code>o2_pub</code> from the server (in struct <code>KUSendMsg</code>).</p> <p>Then the following operations are performed:</p> <div class="language- extra-class"><pre class="language-text"><code>    let s1 = self.database.get_private_keyshare(reciever_msg.user_id)?;
+
+    let x1 = reciever_msg.x1;
+    let t2 = reciever_msg.t2;
+
+    // derive updated private key share
+    s2 = t2 * (td.x1.invert()) * s1;
+
+    theta = FE::new_random();
+    // Note:
+    //  s2 = o1*o2_inv*s1
+    //  t2 = o1*x1*o2_inv
+    let s1_theta = s1 * theta;
+    let s2_theta = s2 * theta;
+
+    let g: GE = ECPoint::generator();
+    s2_pub = g * s2;
+
+    let p1_pub = kp.party_2_public * s1_theta;
+    let p2_pub = reciever_msg.o2_pub * s2_theta;
+
+    // Check P1 = o1_pub*s1 === p2 = o2_pub*s2
+    if p1_pub != p2_pub {
+        error!(&quot;TRANSFER: Protocol failed. P1 != P2.&quot;);
+        return Err(SEError::Generic(String::from(
+            &quot;Transfer protocol error: P1 != P2&quot;,
+        )));
+    }
+</code></pre></div><p>The lockbox then saves <code>s2</code> in a local sealed database (references with <code>user_id</code>). The <code>ecdsa_keypair</code> for this user is not deleted yet (it will be at finalisation/keyupdate_second).</p> <p>The struct <code>KUReceiveMsg { theta, s2_pub }</code> is then returned to the server.</p> <div class="language- extra-class"><pre class="language-text"><code>fn keyupdate_second(&amp;self, finalize_data: KUFinalize) -&gt; Result&lt;KUAttest&gt;;
+</code></pre></div><p>This function is called when the transfer is finalised. If <code>keyupdate_first</code> is run again (e.g. in case of failed batch), the same initial <code>s1</code> is used again to derive <code>s2</code> again.</p> <p>Once <code>keyupdate_second</code> is called, the initial <code>s1</code> must be deleted. The previously saved <code>s2</code> is then used as the active private keyshare (which will be used as <code>s1</code> in the next <code>keyupdate_first</code> for this utxo).</p></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
       ←
       <a href="/docs/03api.html" class="prev">
         Mercury API specification
@@ -46,6 +131,6 @@
       </a>
       →
     </span></p></div> </main></div><div class="global-ui"></div></div>
-    <script src="/assets/js/app.9034bcfa.js" defer></script><script src="/assets/js/2.ae018d90.js" defer></script><script src="/assets/js/9.93d92fd2.js" defer></script>
+    <script src="/assets/js/app.0c21ee8f.js" defer></script><script src="/assets/js/2.ae018d90.js" defer></script><script src="/assets/js/9.ff60804c.js" defer></script>
   </body>
 </html>
